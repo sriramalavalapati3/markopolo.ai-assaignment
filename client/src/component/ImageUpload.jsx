@@ -19,7 +19,7 @@ const ImageUpload = ({ onUploadSuccess }) => {
     formData.append('image', file);
 
     try {
-      const response = await axios.post('/image/upload', formData, {
+      const response = await axios.post('http://localhost:8080/image/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

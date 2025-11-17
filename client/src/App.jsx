@@ -2,50 +2,22 @@ import { useState, useEffect } from 'react';
 import { ImageIcon } from 'lucide-react';
 import ImageUpload from './component/ImageUpload';
 import ImageGallery from './component/ImageGallery';
+import axios from 'axios';
 
 const App = () => {
-  const [images, setImages] = useState([{
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }, {
-    dataUrl: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-    filename: 'paris.jpg',
-  }]);
+  const [images, setImages] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
   const fetchImages = async (id) => {
     setLoading(true);
     try {
-      const apiUrl = process.env.BASE_URL;
+      const apiUrl = 'http://localhost:8080/image/all';
 
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      setImages(data.images || []);
+      const response = await axios.get(apiUrl);
+      if (response?.status === 200) {
+        setImages(response?.data.data || []);
+      }
     } catch (error) {
       console.error('Failed to fetch images:', error);
     } finally {
@@ -59,13 +31,11 @@ const App = () => {
 
   const handleDelete = async (id) => {
     try {
-      const apiUrl = process.env.BASE_URL;
+      const apiUrl = `http://localhost:8080/image/delete/${id}`;
 
-      const response = await fetch(apiUrl, {
-        method: 'DELETE',
-      });
+      const response = await axios.delete(apiUrl);
 
-      if (response.ok) {
+      if (response.status === 200) {
         setImages((prev) => prev.filter((img) => img.id !== id));
       }
     } catch (error) {

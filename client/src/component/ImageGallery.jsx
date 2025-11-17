@@ -19,8 +19,8 @@ const ImageGallery = ({ images, onDelete }) => {
         >
           <div className="aspect-square">
             <img
-              src={image.dataUrl}
-              alt={image.filename}
+              src={`http://localhost:8080${image.fileUrl}`}
+              alt={image.fileName}
               className="w-full h-full object-cover"
             />
           </div>
