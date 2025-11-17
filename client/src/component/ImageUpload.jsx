@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Upload } from 'lucide-react';
+import axios from 'axios';
 
 const ImageUpload = ({ onUploadSuccess }) => {
   const [uploading, setUploading] = useState(false);
@@ -15,45 +16,26 @@ const ImageUpload = ({ onUploadSuccess }) => {
     setProgress(0);
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('image', file);
 
     try {
-      const xhr = new XMLHttpRequest();
-
-      xhr.upload.addEventListener('progress', (e) => {
-        if (e.lengthComputable) {
-          const percentComplete = (e.loaded / e.total) * 100;
-          setProgress(Math.round(percentComplete));
-        }
+      const response = await axios.post('/image/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(percentCompleted);
+        },
       });
 
-      xhr.addEventListener('load', () => {
-        if (xhr.status === 201) {
-          setProgress(100);
-          setTimeout(() => {
-            setUploading(false);
-            setProgress(0);
-            onUploadSuccess();
-            e.target.value = '';
-          }, 500);
-        } else {
-          const response = JSON.parse(xhr.responseText);
-          setError(response.error || 'Upload failed');
-          setUploading(false);
-          setProgress(0);
-        }
-      });
-
-      xhr.addEventListener('error', () => {
-        setError('Network error occurred');
-        setUploading(false);
-        setProgress(0);
-      });
-
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/upload-image`;
-      xhr.open('POST', apiUrl);
-      xhr.setRequestHeader('Authorization', `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`);
-      xhr.send(formData);
+      setUploading(false);
+      setProgress(100);
+      onUploadSuccess(response.data); 
+  
+      console.log('Upload successful:', response.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
       setUploading(false);
