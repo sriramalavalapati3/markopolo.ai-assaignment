@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
-import { ImageMemoryStore } from "./imageMemoryStorage";
-import { UploadImageInput, ImageNotFoundError } from "../types";
+import { ImageMemoryStore } from "./imageMemoryStorage.js";
+import { UploadImageInput, ImageNotFoundError } from "../types.js";
 
 export default class UploadWriter {
   static async uploadImage(input: UploadImageInput) {

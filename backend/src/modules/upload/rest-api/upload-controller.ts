@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import HttpStatusCodes from "../../../utils/https";
-import UploadService from "./upload-service";
+import HttpStatusCodes from "../../../utils/https.js";
+import UploadService from "./upload-service.js";
 
 export default class UploadController {
   uploadImage = async (req: Request, res: Response, next: NextFunction) => {
