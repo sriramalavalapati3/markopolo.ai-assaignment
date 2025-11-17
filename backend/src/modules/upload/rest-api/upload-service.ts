@@ -44,4 +44,9 @@ export default class UploadService {
 
     return { message: "Image deleted successfully", id };
   }
+
+  static async getAllImages(){
+    const images = await UploadWriter.getAllImages();
+    return images;
+  }
 }

@@ -46,6 +46,10 @@ export default class UploadWriter {
     ImageMemoryStore.delete(id);
   }
 
+  static async getAllImages() {
+    return ImageMemoryStore.getAll();
+  }
+
   // helper
   static async exists(id: string) {
     return ImageMemoryStore.getById(id) !== null;

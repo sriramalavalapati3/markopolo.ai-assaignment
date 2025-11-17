@@ -28,4 +28,8 @@ export class ImageMemoryStore {
   static delete(id: string) {
     return this.images.delete(id);
   }
+
+  static getAll() {
+    return Array.from(this.images.values());
+  }
 }

@@ -39,4 +39,16 @@ export default class UploadController {
       next(err);
     }
   };
+
+  getAllImages = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const images = await UploadService.getAllImages();
+      res.status(HttpStatusCodes.OK).json({
+        data: images,
+        message: "Images retrieved successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
