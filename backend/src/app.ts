@@ -2,12 +2,15 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import  {errorHandler}  from './modules/application/errorHandler.js';
 import { UploadRouter } from './modules/upload/rest-api/upload-router.js';
 
 dotenv.config();
 
 const app = express();
+const fileName = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(fileName);
 const Port = process.env.PORT || 8080;
 
 app.use(express.json());
