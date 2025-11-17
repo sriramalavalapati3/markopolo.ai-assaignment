@@ -67,6 +67,7 @@ npm install
 ```bash
 npm start
 ```
+Frontend server runs on http://localhost:3000
 
 # Design Choices & Notes
 
@@ -90,5 +91,3 @@ npm start
 ## Scalability
 - Can replace ImageMemoryStore with DB for persistent metadata.
 - Can extend Multer to handle multiple files or multiple fields per request.
-
-Frontend server runs on http://localhost:3000
