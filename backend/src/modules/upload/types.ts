@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ApplicationError } from "../application/applicationError";
-import HttpStatusCodes from "../../utils/https";
+import { ApplicationError } from "../application/applicationError.js";
+import HttpStatusCodes from "../../utils/https.js";
 
 export enum UploadErrorCode {
   BAD_REQUEST = "UPLOAD_BAD_REQUEST",

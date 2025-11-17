@@ -1,7 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { errorHandler } from './modules/application/errorHandler';
+import  {errorHandler}  from './modules/application/errorHandler.js';
+import { UploadRouter } from './modules/upload/rest-api/upload-router.js';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ app.use(errorHandler);
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
-
+app.use('/image', new UploadRouter().router);
 app.listen(Port, async() => {
   try {
     console.log(`Server is running on port ${Port}`);

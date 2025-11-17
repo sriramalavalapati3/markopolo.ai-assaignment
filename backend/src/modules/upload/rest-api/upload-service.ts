@@ -1,11 +1,11 @@
-import UploadWriter from "../internal/upload-writer";
+import UploadWriter from "../internal/upload-writer.js";
 import {
   UploadBadRequestError,
   UploadNotFoundError,
   UploadSchema,
   UploadImageInput,
   UploadCacheInput,
-} from "../types";
+} from "../types.js";
 
 export default class UploadService {
   static async uploadImage(fileData: UploadImageInput) {

@@ -1,6 +1,6 @@
-import { ApplicationRouter } from "../../application/applicationRouter";
-import UploadController from "./upload-controller";
-import upload from "../../../middlewares/multer";
+import { ApplicationRouter } from "../../application/applicationRouter.js";
+import UploadController from "./upload-controller.js";
+import upload from "../../../middlewares/multer.js";
 
 export class UploadRouter extends ApplicationRouter {
 
